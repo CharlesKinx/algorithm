@@ -140,3 +140,48 @@ int minimumOperationsToWriteY(vector<vector<int>>& grid) {
     }
     return ans;
 }
+
+/**
+ * 100246. 将元素分配到两个数组中 II
+*/
+vector<int> resultArray(vector<int>& nums) {
+    vector<int> arr1;
+    vector<int> arr2;
+
+    int len = nums.size();
+
+    arr1.push_back(nums[0]);
+    arr2.push_back(nums[1]);
+
+    for(int i = 2;i<len;i++) {
+        if(greaterCount(arr1,nums[i]) > greaterCount(arr2,nums[i])) {
+            arr2.push_back(nums[i]);
+        }else if(greaterCount(arr1,nums[i]) < greaterCount(arr2,nums[i])) {
+            arr1.push_back(nums[i]);
+        } else if(greaterCount(arr1,nums[i]) == greaterCount(arr2,nums[i])) {
+            if(arr1.size() > arr2.size()) {
+                arr2.push_back(nums[i]);
+            }else if(arr1.size() <arr2.size()) {
+                arr1.push_back(nums[i]);
+            }else{
+                arr1.push_back(nums[i]);
+            }
+        }
+    }
+
+    for(int i = 0;i<arr2.size();i++) {
+        arr1.push_back(arr2[i]);
+    }
+    return arr1;
+}
+
+int greaterCount(vector<int> arr,int value) {
+
+    int ans = 0;
+    for(int i = 0;i<arr.size();i++) {
+        if(arr[i] > value) {
+            ans++;
+        }
+    }
+    return ans;
+}

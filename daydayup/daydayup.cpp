@@ -303,8 +303,49 @@ int countPaths(int n, vector<vector<int>> &roads)
 
             if(!visited[to] && dist[temp.end] + w < dist[to]) {
                 dist[to] = dist[temp.end] + w;
+                pq.push(edge(dist[to],temp.end,t.first));
             }
         }
     }
+    return 0;
+}
 
+/**
+ * 1976. 到达目的地的方案数
+*/
+int countPaths(int n, vector<vector<int>>& roads) {
+
+    vector<vector<pair<int,int>>> edge(n);
+    for(auto e : roads) {
+        edge[e[0]].push_back({e[1],e[2]});
+        edge[e[1]].push_back({e[0],e[2]});
+    }
+
+    priority_queue<pair<long long,int>,vector<pair<long long,int>>,greater<pair<long long,int>>> pq;
+
+    pq.emplace(0,0);
+    vector<long long> dis(n, LLONG_MAX);
+    vector<long long> ways(n);
+
+    dis[0] = 0;
+    ways[0] = 1;
+
+    while (!pq.empty()) {
+        auto [t,u] = pq.top();
+        pq.pop();
+
+        if(t > dis[u]) {
+            continue;
+        }
+        for(auto &[v,w] : edge[u]) {
+            if(t + w < dis[v]) {
+                dis[v] = t+w;
+                ways[v] = ways[u];
+                pq.emplace(dis[v],v);
+            }else if(t + w == dis[v]) {
+                ways[v] = (ways[u] + ways[v]) % 1000000007;
+            }
+        }
+    }
+    return ways[n-1];
 }

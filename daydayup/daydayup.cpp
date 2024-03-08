@@ -5,6 +5,7 @@
 #include <stack>
 #include <string>
 #include <unordered_map>
+#include<unordered_set>
 using namespace std;
 
 /**
@@ -348,4 +349,22 @@ int countPaths(int n, vector<vector<int>>& roads) {
         }
     }
     return ways[n-1];
+}
+
+/**
+ * 2834. 找出美丽数组的最小和
+*/
+int minimumPossibleSum(int n, int target) {
+
+    int m = target/2;
+    if(n <=m) {
+        long long ans = n * (n+1) /2;
+        return ans%1000000007;
+    }else{
+
+        long long ans = (long long) (m+1)*m/2;
+        long long ans1 = ((long long) target + target + n - m -1) * (n - m) /2;
+
+        return (ans + ans1) % 1000000007;
+    }
 }

@@ -368,3 +368,38 @@ int minimumPossibleSum(int n, int target) {
         return (ans + ans1) % 1000000007;
     }
 }
+
+/**
+ * 
+*/
+string capitalizeTitle(string title) {
+    title.append(" ");
+    int len = title.size();
+    int begin = 0;
+    int end = 0;
+      while(end < len) {
+        if(title[end] == ' ') {
+            cout<<begin<<" "<<end<<endl;
+            if(end - begin <= 2) {
+                while(begin <= end) {
+                    if(title[begin] <= 'Z' && title[begin] >= 'A') {
+                        title[begin] += 32;
+                    }
+                    begin++;
+                }
+            }else{
+                if(title[begin] >= 'a' && title[begin] <= 'z') {
+                    title[begin] -= 32;
+                }
+                begin++;
+                 while(begin <= end) {
+                    if(title[begin] <= 'Z'&& title[begin] >= 'A') {
+                        title[begin] += 32;
+                    }
+                    begin++;
+                }
+            }
+        }
+    title.erase(len-1);
+    return title;
+}

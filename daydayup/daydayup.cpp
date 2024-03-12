@@ -377,9 +377,8 @@ string capitalizeTitle(string title) {
     int len = title.size();
     int begin = 0;
     int end = 0;
-      while(end < len) {
+    while(end < len) {
         if(title[end] == ' ') {
-            cout<<begin<<" "<<end<<endl;
             if(end - begin <= 2) {
                 while(begin <= end) {
                     if(title[begin] <= 'Z' && title[begin] >= 'A') {
@@ -400,6 +399,11 @@ string capitalizeTitle(string title) {
                 }
             }
         }
+        if(begin == end &&title[begin] == ' ') {
+            begin++;
+        }
+        end++;
+    }
     title.erase(len-1);
     return title;
 }

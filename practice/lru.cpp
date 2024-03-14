@@ -4,6 +4,7 @@
 #include<deque>
 using namespace std;
 
+
 struct DoubleDirectList {
     DoubleDirectList* pre;
     DoubleDirectList* next;
@@ -36,7 +37,7 @@ public:
             temp->next->pre = temp->pre;
             temp->pre = head;
             temp->next = head->next;
-            head->pre = temp;
+            head->next->pre = temp;
             head->next = temp;
             return temp->value;
         }
@@ -47,6 +48,14 @@ public:
         if(hash.count(key)) {
             if(hash[key]->value != value) {
                 hash[key]->value = value;
+                 DoubleDirectList* temp = hash[key];
+            temp->pre->next = temp->next;
+            temp->next->pre = temp->pre;
+            temp->pre = head;
+            temp->next = head->next;
+            head->next->pre = temp;
+            head->next = temp;
+
                 return;
             }
         }else{
@@ -57,17 +66,13 @@ public:
                 head->next->pre = list;
                 list->pre = head;
                 head->next = list;
-                end = list;
                 size++;
             }else{
                 DoubleDirectList* temp = end->pre;
-
-                temp->next = end;
-                end->pre = temp.pre;
-
-                end = temp->pre;
-                end->next = nullptr;
+                temp->pre->next = end;
+                end->pre = temp->pre;
                 hash.erase(temp->key);
+
                 temp->key = key;
                 temp->value = value;
                 hash[key] = temp;

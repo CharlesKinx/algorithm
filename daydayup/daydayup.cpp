@@ -407,3 +407,24 @@ string capitalizeTitle(string title) {
     title.erase(len-1);
     return title;
 }
+
+/**
+ * 2789. 合并后数组中的最大元素
+*/
+long long maxArrayValue(vector<int>& nums) {
+    long long ans = LLONG_MIN;
+
+    while(!nums.empty()) {
+        long long t = nums.back();
+        nums.pop_back();
+
+        while(!nums.empty() &&nums.back() <= t) {
+            t += nums.back();
+            nums.pop_back();
+        }
+
+        ans = max(ans,t);
+    }
+
+    return ans;
+}
